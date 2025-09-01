@@ -1,0 +1,457 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "439a83f7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/home/eliana/escola/venv/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n",
+      "  from .autonotebook import tqdm as notebook_tqdm\n",
+      "2025-06-06 19:44:38.077611: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n",
+      "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\n",
+      "E0000 00:00:1749235478.091237  699834 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n",
+      "E0000 00:00:1749235478.095288  699834 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n",
+      "W0000 00:00:1749235478.105635  699834 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n",
+      "W0000 00:00:1749235478.105650  699834 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n",
+      "W0000 00:00:1749235478.105651  699834 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n",
+      "W0000 00:00:1749235478.105652  699834 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n",
+      "2025-06-06 19:44:38.108808: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.\n",
+      "To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.\n",
+      "[I 2025-06-06 19:44:39,571] A new study created in memory with name: no-name-59b72f93-fc90-4045-abe2-79b5a4debbf9\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "I0000 00:00:1749235479.891471  699834 gpu_device.cc:2019] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 4804 MB memory:  -> device: 0, name: NVIDIA GeForce GTX 1660 SUPER, pci bus id: 0000:03:00.0, compute capability: 7.5\n",
+      "I0000 00:00:1749235479.895027  699834 gpu_device.cc:2019] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 4804 MB memory:  -> device: 1, name: NVIDIA GeForce GTX 1660 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5\n",
+      "/home/eliana/escola/venv/lib/python3.12/site-packages/keras/src/trainers/data_adapters/py_dataset_adapter.py:121: UserWarning: Your `PyDataset` class should call `super().__init__(**kwargs)` in its constructor. `**kwargs` can include `workers`, `use_multiprocessing`, `max_queue_size`. Do not pass these arguments to `fit()`, as they will be ignored.\n",
+      "  self._warn_if_super_not_called()\n",
+      "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\n",
+      "I0000 00:00:1749235481.988524  699920 service.cc:152] XLA service 0x709e04004760 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:\n",
+      "I0000 00:00:1749235481.988540  699920 service.cc:160]   StreamExecutor device (0): NVIDIA GeForce GTX 1660 SUPER, Compute Capability 7.5\n",
+      "I0000 00:00:1749235481.988542  699920 service.cc:160]   StreamExecutor device (1): NVIDIA GeForce GTX 1660 SUPER, Compute Capability 7.5\n",
+      "2025-06-06 19:44:42.016160: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.\n",
+      "I0000 00:00:1749235482.239197  699920 cuda_dnn.cc:529] Loaded cuDNN version 90300\n",
+      "2025-06-06 19:44:42.541538: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.39 = (f32[32,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,3,150,150]{3,2,1,0} %bitcast.3365, f32[64,3,3,3]{3,2,1,0} %bitcast.3372, f32[64]{0} %bitcast.3374), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:42.662042: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.40 = (f32[32,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,64,150,150]{3,2,1,0} %bitcast.3379, f32[64,64,3,3]{3,2,1,0} %bitcast.3386, f32[64]{0} %bitcast.3388), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:43.572391: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.41 = (f32[32,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,64,75,75]{3,2,1,0} %bitcast.3396, f32[128,64,3,3]{3,2,1,0} %bitcast.3403, f32[128]{0} %bitcast.3405), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:43.974847: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.42 = (f32[32,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,128,75,75]{3,2,1,0} %bitcast.3410, f32[128,128,3,3]{3,2,1,0} %bitcast.3417, f32[128]{0} %bitcast.3419), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:44.693138: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.43 = (f32[32,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,128,37,37]{3,2,1,0} %bitcast.3425, f32[256,128,3,3]{3,2,1,0} %bitcast.3432, f32[256]{0} %bitcast.3434), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:45.022969: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.44 = (f32[32,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,256,37,37]{3,2,1,0} %bitcast.3439, f32[256,256,3,3]{3,2,1,0} %bitcast.3446, f32[256]{0} %bitcast.3448), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:45.547751: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.46 = (f32[32,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,256,18,18]{3,2,1,0} %bitcast.3468, f32[512,256,3,3]{3,2,1,0} %bitcast.3475, f32[512]{0} %bitcast.3477), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:45.859737: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.47 = (f32[32,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,512,18,18]{3,2,1,0} %bitcast.3482, f32[512,512,3,3]{3,2,1,0} %bitcast.3489, f32[512]{0} %bitcast.3491), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:44:46.286985: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.49 = (f32[32,512,9,9]{3,2,1,0}, u8[0]{0}) custom-call(f32[32,512,9,9]{3,2,1,0} %bitcast.3511, f32[512,512,3,3]{3,2,1,0} %bitcast.3518, f32[512]{0} %bitcast.3520), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block5_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "I0000 00:00:1749235487.254880  699920 device_compiler.h:188] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.\n",
+      "2025-06-06 19:45:02.356217: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.39 = (f32[20,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,3,150,150]{3,2,1,0} %bitcast.3365, f32[64,3,3,3]{3,2,1,0} %bitcast.3372, f32[64]{0} %bitcast.3374), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:02.456819: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.40 = (f32[20,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,64,150,150]{3,2,1,0} %bitcast.3379, f32[64,64,3,3]{3,2,1,0} %bitcast.3386, f32[64]{0} %bitcast.3388), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:03.091351: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.41 = (f32[20,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,64,75,75]{3,2,1,0} %bitcast.3396, f32[128,64,3,3]{3,2,1,0} %bitcast.3403, f32[128]{0} %bitcast.3405), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:03.382590: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.42 = (f32[20,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,128,75,75]{3,2,1,0} %bitcast.3410, f32[128,128,3,3]{3,2,1,0} %bitcast.3417, f32[128]{0} %bitcast.3419), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:03.880927: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.43 = (f32[20,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,128,37,37]{3,2,1,0} %bitcast.3425, f32[256,128,3,3]{3,2,1,0} %bitcast.3432, f32[256]{0} %bitcast.3434), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:04.105150: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.44 = (f32[20,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,256,37,37]{3,2,1,0} %bitcast.3439, f32[256,256,3,3]{3,2,1,0} %bitcast.3446, f32[256]{0} %bitcast.3448), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:04.478333: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.46 = (f32[20,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,256,18,18]{3,2,1,0} %bitcast.3468, f32[512,256,3,3]{3,2,1,0} %bitcast.3475, f32[512]{0} %bitcast.3477), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:04.699457: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.47 = (f32[20,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,512,18,18]{3,2,1,0} %bitcast.3482, f32[512,512,3,3]{3,2,1,0} %bitcast.3489, f32[512]{0} %bitcast.3491), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:05.104277: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.49 = (f32[20,512,9,9]{3,2,1,0}, u8[0]{0}) custom-call(f32[20,512,9,9]{3,2,1,0} %bitcast.3511, f32[512,512,3,3]{3,2,1,0} %bitcast.3518, f32[512]{0} %bitcast.3520), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block5_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:19.449471: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.39 = (f32[12,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,3,150,150]{3,2,1,0} %bitcast.833, f32[64,3,3,3]{3,2,1,0} %bitcast.840, f32[64]{0} %bitcast.842), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:19.506383: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.40 = (f32[12,64,150,150]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,64,150,150]{3,2,1,0} %bitcast.847, f32[64,64,3,3]{3,2,1,0} %bitcast.854, f32[64]{0} %bitcast.856), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block1_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:19.933532: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.41 = (f32[12,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,64,75,75]{3,2,1,0} %bitcast.864, f32[128,64,3,3]{3,2,1,0} %bitcast.871, f32[128]{0} %bitcast.873), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:20.139018: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.42 = (f32[12,128,75,75]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,128,75,75]{3,2,1,0} %bitcast.878, f32[128,128,3,3]{3,2,1,0} %bitcast.885, f32[128]{0} %bitcast.887), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block2_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:20.496083: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.43 = (f32[12,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,128,37,37]{3,2,1,0} %bitcast.893, f32[256,128,3,3]{3,2,1,0} %bitcast.900, f32[256]{0} %bitcast.902), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:20.667448: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.44 = (f32[12,256,37,37]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,256,37,37]{3,2,1,0} %bitcast.907, f32[256,256,3,3]{3,2,1,0} %bitcast.914, f32[256]{0} %bitcast.916), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block3_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:20.937740: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.46 = (f32[12,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,256,18,18]{3,2,1,0} %bitcast.936, f32[512,256,3,3]{3,2,1,0} %bitcast.943, f32[512]{0} %bitcast.945), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:21.099900: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.47 = (f32[12,512,18,18]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,512,18,18]{3,2,1,0} %bitcast.950, f32[512,512,3,3]{3,2,1,0} %bitcast.957, f32[512]{0} %bitcast.959), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block4_conv2_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "2025-06-06 19:45:21.390894: I external/local_xla/xla/service/gpu/autotuning/conv_algorithm_picker.cc:549] Omitted potentially buggy algorithm eng14{k25=0} for conv %cudnn-conv-bias-activation.49 = (f32[12,512,9,9]{3,2,1,0}, u8[0]{0}) custom-call(f32[12,512,9,9]{3,2,1,0} %bitcast.979, f32[512,512,3,3]{3,2,1,0} %bitcast.986, f32[512]{0} %bitcast.988), window={size=3x3 pad=1_1x1_1}, dim_labels=bf01_oi01->bf01, custom_call_target=\"__cudnn$convBiasActivationForward\", metadata={op_type=\"Conv2D\" op_name=\"functional_1/vgg16_1/block5_conv1_1/convolution\" source_file=\"/home/eliana/escola/venv/lib/python3.12/site-packages/tensorflow/python/framework/ops.py\" source_line=1200}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kRelu\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false}\n",
+      "[I 2025-06-06 19:47:12,583] Trial 0 finished with value: 0.15422534942626953 and parameters: {'use_data_aug': True, 'optimizer': 'sgd', 'loss_function': 'mse', 'dense_units': 256, 'learning_rate': 1.497352449302603e-05}. Best is trial 0 with value: 0.15422534942626953.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:48:53,168] Trial 1 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 0.0009347551677135758}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:51:16,949] Trial 2 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'kld', 'dense_units': 128, 'learning_rate': 0.0008340811996121601}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:53:40,474] Trial 3 finished with value: 0.15422534942626953 and parameters: {'use_data_aug': True, 'optimizer': 'sgd', 'loss_function': 'kld', 'dense_units': 256, 'learning_rate': 3.250696823044371e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:55:21,748] Trial 4 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 1.864655187798727e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:57:03,239] Trial 5 finished with value: 0.145070418715477 and parameters: {'use_data_aug': False, 'optimizer': 'sgd', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 2.612795843881944e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 19:59:27,341] Trial 6 finished with value: 0.1401408463716507 and parameters: {'use_data_aug': True, 'optimizer': 'adam', 'loss_function': 'kld', 'dense_units': 256, 'learning_rate': 7.611156807415723e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:01:07,672] Trial 7 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'sgd', 'loss_function': 'mse', 'dense_units': 128, 'learning_rate': 0.00014756832757374454}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:03:30,758] Trial 8 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'mse', 'dense_units': 256, 'learning_rate': 1.0104410184559599e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:05:12,203] Trial 9 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'adam', 'loss_function': 'kld', 'dense_units': 256, 'learning_rate': 2.8662008398973856e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:06:53,873] Trial 10 finished with value: 0.15422534942626953 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 0.0009920934351454714}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:09:17,200] Trial 11 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 128, 'learning_rate': 0.0008694997392910193}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:10:58,335] Trial 12 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'kld', 'dense_units': 128, 'learning_rate': 0.0003915552582510061}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:13:21,898] Trial 13 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'kld', 'dense_units': 128, 'learning_rate': 0.00036063060381316746}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:15:45,111] Trial 14 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 0.0004116396423923621}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:17:25,916] Trial 15 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 128, 'learning_rate': 0.00019812266851918027}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:19:49,572] Trial 16 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': True, 'optimizer': 'adam', 'loss_function': 'kld', 'dense_units': 512, 'learning_rate': 0.0006836672737128289}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:21:30,828] Trial 17 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'kld', 'dense_units': 128, 'learning_rate': 5.979208638024344e-05}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:23:53,867] Trial 18 finished with value: 0.13943661749362946 and parameters: {'use_data_aug': True, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 0.00022207913484852614}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 4276 images belonging to 7 classes.\n",
+      "Found 1420 images belonging to 7 classes.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[I 2025-06-06 20:25:34,808] Trial 19 finished with value: 0.15633802115917206 and parameters: {'use_data_aug': False, 'optimizer': 'adam', 'loss_function': 'mse', 'dense_units': 128, 'learning_rate': 0.0005833713441867398}. Best is trial 1 with value: 0.15633802115917206.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Melhores parâmetros (Feature Extraction): {'use_data_aug': False, 'optimizer': 'rmsprop', 'loss_function': 'categorical_crossentropy', 'dense_units': 512, 'learning_rate': 0.0009347551677135758}\n"
+     ]
+    }
+   ],
+   "source": [
+    "import optuna\n",
+    "import tensorflow as tf\n",
+    "from tensorflow.keras import layers, models, optimizers\n",
+    "from tensorflow.keras.applications import VGG16\n",
+    "from tensorflow.keras.preprocessing.image import ImageDataGenerator\n",
+    "\n",
+    "\n",
+    "def objective_fe(trial):\n",
+    "    # Hiperparâmetros\n",
+    "    use_data_aug = trial.suggest_categorical(\"use_data_aug\", [True, False])\n",
+    "    optimizer_name = trial.suggest_categorical(\"optimizer\", [\"adam\", \"rmsprop\", \"sgd\"])\n",
+    "    loss_fn = trial.suggest_categorical(\"loss_function\", [\"categorical_crossentropy\", \"kld\", \"mse\"])\n",
+    "    dense_units = trial.suggest_categorical(\"dense_units\", [128, 256, 512])\n",
+    "    learning_rate = trial.suggest_float(\"learning_rate\", 1e-5, 1e-3, log=True)\n",
+    "\n",
+    "    # Augmentation\n",
+    "    if use_data_aug:\n",
+    "        train_datagen = ImageDataGenerator(rescale=1./255, rotation_range=20, zoom_range=0.2, horizontal_flip=True)\n",
+    "    else:\n",
+    "        train_datagen = ImageDataGenerator(rescale=1./255)\n",
+    "\n",
+    "    val_datagen = ImageDataGenerator(rescale=1./255)\n",
+    "\n",
+    "    train_generator = train_datagen.flow_from_directory('dataset_balanceado_final/train',\n",
+    "        target_size=(150, 150), batch_size=32, class_mode='categorical')\n",
+    "    val_generator = val_datagen.flow_from_directory('dataset_balanceado_final/validation',\n",
+    "        target_size=(150, 150), batch_size=32, class_mode='categorical')\n",
+    "\n",
+    "    # VGG16 congelado (Feature Extraction)\n",
+    "    conv_base = VGG16(weights='imagenet', include_top=False, input_shape=(150, 150, 3))\n",
+    "    conv_base.trainable = False\n",
+    "\n",
+    "    inputs = tf.keras.Input(shape=(150, 150, 3))\n",
+    "    x = tf.keras.applications.vgg16.preprocess_input(inputs)\n",
+    "    x = conv_base(x)\n",
+    "    x = layers.Flatten()(x)\n",
+    "    x = layers.Dense(dense_units, activation='relu')(x)\n",
+    "    x = layers.Dropout(0.5)(x)\n",
+    "    outputs = layers.Dense(7, activation='softmax')(x)\n",
+    "\n",
+    "    model = models.Model(inputs, outputs)\n",
+    "\n",
+    "    # Otimizador\n",
+    "    if optimizer_name == \"adam\":\n",
+    "        optimizer = optimizers.Adam(learning_rate=learning_rate)\n",
+    "    elif optimizer_name == \"rmsprop\":\n",
+    "        optimizer = optimizers.RMSprop(learning_rate=learning_rate)\n",
+    "    else:\n",
+    "        optimizer = optimizers.SGD(learning_rate=learning_rate)\n",
+    "\n",
+    "    model.compile(optimizer=optimizer, loss=loss_fn, metrics=['accuracy'])\n",
+    "\n",
+    "    history = model.fit(train_generator, epochs=5, validation_data=val_generator, verbose=0)\n",
+    "    return history.history[\"val_accuracy\"][-1]\n",
+    "\n",
+    "study_fe = optuna.create_study(direction=\"maximize\")\n",
+    "study_fe.optimize(objective_fe, n_trials=20)\n",
+    "print(\"Melhores parâmetros (Feature Extraction):\", study_fe.best_params)\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "venv",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
